@@ -1,0 +1,453 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.3.RELEASE</version>
+    </parent>
+
+    <groupId>com.li</groupId>
+    <artifactId>lightning</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>lightning</name>
+    <url>http://maven.apache.org</url>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <mybatis-spring-boot-starter.version>1.3.0</mybatis-spring-boot-starter.version>
+        <!--<guava.version>21.0</guava.version>-->
+        <mysql-connector-java.version>5.1.42</mysql-connector-java.version>
+        <poi.version>3.16</poi.version>
+        <poi-ooxml.version>3.16</poi-ooxml.version>
+        <!-- <start-class>com.li.Application</start-class>-->
+        <hive-jdbc.version>1.1.0-cdh5.10.1</hive-jdbc.version>
+        <redis.version>1.4.0.RELEASE</redis.version>
+        <spring-kafka.version>1.1.2.RELEASE</spring-kafka.version>
+        <!-- 生产 -->
+        <storm.version>1.1.0.2.6.3.0-235</storm.version>
+        <!-- <storm.version>1.0.4</storm.version>-->
+        <!--<storm.version>1.0.1.2.5.3.0-37</storm.version>-->
+        <kafka.version>0.10.0.2.5.0.0-1245</kafka.version>
+        <!--    <kafka.version>0.10.0.2.5.0.0-235</kafka.version>-->
+        <kafka.artifact.id>kafka_2.10</kafka.artifact.id>
+        <guava.version>16.0.1</guava.version>
+        <hbase.version>1.0.2</hbase.version>
+        <scope.storm>provided</scope.storm>
+        <!-- <storm.version>1.0.1</storm.version>-->
+    </properties>
+
+    <repositories>
+        <repository>
+            <!--<id>cloudera-repo-releases</id>
+            <url>https://repository.cloudera.com/content/repositories/releases/</url>-->
+            <id>hortonworks</id>
+            <url>http://repo.hortonworks.com/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>cloudera-repo-releases</id>
+            <url>https://repository.cloudera.com/content/repositories/releases/</url>
+        </repository>
+
+        <repository>
+            <id>3rd</id>
+            <name>internal nexus repository</name>
+            <url>http://10.16.12.43:9090/repository/3rd/</url>
+        </repository>
+
+        <repository>
+            <id>internal</id>
+            <name>internal nexus repository</name>
+            <url>http://10.10.68.62:8081/nexus/content/groups/public</url>
+        </repository>
+
+        <repository>
+            <id>central-repos</id>
+            <name>Central Repository</name>
+            <url>http://repo.maven.apache.org/maven2</url>
+        </repository>
+
+        <repository>
+            <id>central-repos2</id>
+            <name>Central Repository 2</name>
+            <url>http://repo1.maven.org/maven2/</url>
+        </repository>
+    </repositories>
+
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring-boot-starter.version}</version>
+
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-redis</artifactId>
+            <version>${redis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.31</version>
+        </dependency>
+        <!-- spring-kafka start -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+            <version>${spring-kafka.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>${kafka.artifact.id}</artifactId>
+            <version>${kafka.version}</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- storm-->
+        <dependency>
+            <groupId>org.apache.storm</groupId>
+            <artifactId>storm-core</artifactId>
+            <scope>provided</scope>
+            <version>1.1.2</version>
+        </dependency>
+
+      <!--  <dependency>
+            <groupId>org.apache.storm</groupId>
+            <artifactId>storm-core</artifactId>
+            <scope>system</scope>
+            <systemPath>/Users/wangdi/Documents/sohu_pro/1.1.0.2.6.3.0-235/storm-core-1.1.0.2.6.3.0-235.jar</systemPath>
+            <version>${storm.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>0.10.0.2.5.0.0-1245</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.storm</groupId>
+            <artifactId>storm-kafka-client</artifactId>
+            <version>${storm.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>1.17</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <!-- 数学表达式计算 -->
+        <dependency>
+            <groupId>net.sourceforge.jeval</groupId>
+            <artifactId>jeval</artifactId>
+            <version>0.9.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-common</artifactId>
+            <version>${hbase.version}</version>
+        </dependency>
+        <!-- elasticsearch start-->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-hadoop</artifactId>
+            <version>6.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>6.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>6.1.1</version>
+        </dependency>
+        <!-- elasticsearch end-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>1.6</version>
+        </dependency>
+
+        <!--  <dependency>
+              <groupId>org.apache.kafka</groupId>
+              <artifactId>kafka-clients</artifactId>
+              <version>0.10.2.0</version>
+          </dependency>-->
+        <!--  <dependency>
+              <groupId>org.apache.kafka</groupId>
+              <artifactId>kafka_2.10</artifactId>
+              <version>0.10.2.0</version>
+          </dependency>-->
+        <!-- <dependency>
+             <groupId>org.springframework.kafka</groupId>
+             <artifactId>spring-kafka-test</artifactId>
+             <version>${spring-kafka.version}</version>
+             <scope>test</scope>
+         </dependency>-->
+        <!-- spring-kafka end -->
+
+    </dependencies>
+
+    <!--<build>
+        <finalName>lightning</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+           &lt;!&ndash; <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>&ndash;&gt;
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>-->
+    <build>
+        <finalName>lightning</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <compilerVersion>1.8</compilerVersion>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                   <!-- <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            &lt;!&ndash; <mainClass>com.li.storm.CollectTopo</mainClass>&ndash;&gt;
+                        </manifest>
+                    </archive>-->
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assemble</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--<build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>
+                        <delimiter>@</delimiter>
+                    </delimiters>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>-->
+
+    <profiles>
+        <profile>
+            <id>test</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <maven.environment>test</maven.environment>
+                <maven.nimbus.host.remote>kfm159082.heracles.sohuno.com</maven.nimbus.host.remote>
+                <maven.zk.host.remote>zk1.adrd.sohuno.com,zk2.adrd.sohuno.com,zk3.adrd.sohuno.com,zk4.adrd.sohuno.com,zk5.adrd.sohuno.com</maven.zk.host.remote>
+                <maven.spout.zk.host>zk1.adrd.sohuno.com:2181,zk2.adrd.sohuno.com:2181,zk3.adrd.sohuno.com:2181,zk4.adrd.sohuno.com:2181,zk5.adrd.sohuno.com:2181</maven.spout.zk.host>
+                <maven.kafka.broker.zk.path>/kafka-0.10.2.1/brokers</maven.kafka.broker.zk.path>
+
+                <maven.nimbus.seeds>styz15121.heracles.sohuno.com</maven.nimbus.seeds>
+                <maven.kafka.broker>kf01.adrd.sohuno.com:8092,kf02.adrd.sohuno.com:8092,kf03.adrd.sohuno.com:8092,kf04.adrd.sohuno.com:8092,kf05.adrd.sohuno.com:8092,kf06.adrd.sohuno.com:8092,kf07.adrd.sohuno.com:8092,kf08.adrd.sohuno.com:8092,kf09.adrd.sohuno.com:8092,kf10.adrd.sohuno.com:8092,kf11.adrd.sohuno.com:8092,kf12.adrd.sohuno.com:8092,kf13.adrd.sohuno.com:8092,kf14.adrd.sohuno.com:8092,kf15.adrd.sohuno.com:8092,kf16.adrd.sohuno.com:8092</maven.kafka.broker>
+                <maven.redis.cluster.host>10.31.71.16:20000,10.31.71.17:20000,10.31.71.16:21000,10.31.71.17:21000,10.31.71.16:22000,10.31.71.17:22000,10.31.71.16:23000,10.31.71.17:23000,10.31.71.16:24000,10.31.71.17:24000,10.31.71.16:25000,10.31.71.17:25000,10.31.71.16:26000,10.31.71.17:26000,10.31.71.16:27000,10.31.71.17:27000,10.31.71.16:28000,10.31.71.17:28000,10.31.71.16:29000,10.31.71.17:29000</maven.redis.cluster.host>
+                <maven.redis.cluster.pwd>Mv6om4XTf</maven.redis.cluster.pwd>
+            </properties>
+
+        </profile>
+        <profile>
+            <id>prod-jk</id>
+            <properties>
+                <maven.environment>prod</maven.environment>
+                <maven.nimbus.host.remote>kfm159082.heracles.sohuno.com</maven.nimbus.host.remote>
+                <maven.zk.host.remote>zk1.adrd.sohuno.com,zk2.adrd.sohuno.com,zk3.adrd.sohuno.com,zk4.adrd.sohuno.com,zk5.adrd.sohuno.com</maven.zk.host.remote>
+                <maven.spout.zk.host>zk1.adrd.sohuno.com:2181,zk2.adrd.sohuno.com:2181,zk3.adrd.sohuno.com:2181,zk4.adrd.sohuno.com:2181,zk5.adrd.sohuno.com:2181</maven.spout.zk.host>
+                <maven.kafka.broker.zk.path>/kafka-0.10.2.1/brokers</maven.kafka.broker.zk.path>
+
+                <maven.nimbus.seeds>styz15121.heracles.sohuno.com</maven.nimbus.seeds>
+                <maven.kafka.broker>kf01new.adrd.sohuno.com:8092,kf02new.adrd.sohuno.com:8092,kf03new.adrd.sohuno.com:8092,kf04new.adrd.sohuno.com:8092,kf05new.adrd.sohuno.com:8092,kf06new.adrd.sohuno.com:8092,kf07new.adrd.sohuno.com:8092,kf08new.adrd.sohuno.com:8092,kf09new.adrd.sohuno.com:8092,kf10new.adrd.sohuno.com:8092,kf11new.adrd.sohuno.com:8092,kf12new.adrd.sohuno.com:8092</maven.kafka.broker>
+                <maven.redis.cluster.host>10.16.13.53:8000,10.16.13.53:8001,10.16.13.53:8002,10.16.13.53:8003,10.16.13.53:8004,10.16.13.53:8005,10.16.13.53:8006,10.16.13.53:8007,10.16.13.54:8000,10.16.13.54:8001,10.16.13.54:8002,10.16.13.54:8003,10.16.13.54:8004,10.16.13.54:8005,10.16.13.54:8006,10.16.13.54:8007</maven.redis.cluster.host>
+                <!--<maven.redis.cluster.host>10.18.38.41:9000,10.18.38.41:9001,10.18.38.42:9000,10.18.38.42:9001</maven.redis.cluster.host>-->
+                <maven.redis.cluster.pwd>Ef4bE3H</maven.redis.cluster.pwd>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod-charge</id>
+            <properties>
+                <maven.environment>prod</maven.environment>
+                <maven.spout.zk.host>phist.heracles.sohuno.com:2181,pm096021.heracles.sohuno.com:2181,pmeta1.heracles.sohuno.com:2181,pmeta2.heracles.sohuno.com:2181,prm2.heracles.sohuno.com:2181</maven.spout.zk.host>                <maven.kafka.broker.zk.path>/kafka-0.10.2.1/brokers</maven.kafka.broker.zk.path>
+                <maven.nimbus.seeds>styz15121.heracles.sohuno.com</maven.nimbus.seeds>
+                <maven.kafka.broker>kfk077030.kraken.sohurdc.com:9092,kfk077033.kraken.sohurdc.com:9092,kfk077029.kraken.sohurdc.com:9092,kfk077031.kraken.sohurdc.com:9092,kfk077032.kraken.sohurdc.com:9092</maven.kafka.broker>
+                <maven.redis.cluster.host>10.16.13.53:9000,10.16.13.53:9001,10.16.13.53:9002,10.16.13.53:9003,10.16.13.53:9004,10.16.13.53:9005,10.16.13.53:9006,10.16.13.53:9007,10.16.13.53:9008,10.16.13.53:9009,10.16.13.53:9010,10.16.13.53:9011,10.16.13.53:9012,10.16.13.53:9013,10.16.13.53:9014,10.16.13.53:9015,10.16.13.54:9000,10.16.13.54:9001,10.16.13.54:9002,10.16.13.54:9003,10.16.13.54:9004,10.16.13.54:9005,10.16.13.54:9006,10.16.13.54:9007,10.16.13.54:9008,10.16.13.54:9009,10.16.13.54:9010,10.16.13.54:9011,10.16.13.54:9012,10.16.13.54:9013,10.16.13.54:9014,10.16.13.54:9015</maven.redis.cluster.host>
+                <maven.redis.cluster.pwd>Ef4bE3H</maven.redis.cluster.pwd>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod-by</id>
+            <properties>
+                <maven.environment>prod</maven.environment>
+                <maven.spout.zk.host>phist.heracles.sohuno.com:2181,pm096021.heracles.sohuno.com:2181,pmeta1.heracles.sohuno.com:2181,pmeta2.heracles.sohuno.com:2181,prm2.heracles.sohuno.com:2181</maven.spout.zk.host>
+                <maven.nimbus.seeds>styz15121.heracles.sohuno.com</maven.nimbus.seeds>
+                <maven.kafka.broker>kfk077030.kraken.sohurdc.com:9092,kfk077033.kraken.sohurdc.com:9092,kfk077029.kraken.sohurdc.com:9092,kfk077031.kraken.sohurdc.com:9092,kfk077032.kraken.sohurdc.com:9092</maven.kafka.broker>
+                <maven.redis.cluster.host>10.16.13.53:8000,10.16.13.53:8001,10.16.13.53:8002,10.16.13.53:8003,10.16.13.53:8004,10.16.13.53:8005,10.16.13.53:8006,10.16.13.53:8007,10.16.13.54:8000,10.16.13.54:8001,10.16.13.54:8002,10.16.13.54:8003,10.16.13.54:8004,10.16.13.54:8005,10.16.13.54:8006,10.16.13.54:8007</maven.redis.cluster.host>
+                <!--<maven.redis.cluster.host>10.18.38.41:9000,10.18.38.41:9001,10.18.38.42:9000,10.18.38.42:9001</maven.redis.cluster.host>-->
+                <maven.redis.cluster.pwd>Ef4bE3H</maven.redis.cluster.pwd>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod-tv</id>
+            <properties>
+                <maven.environment>prod</maven.environment>
+                <maven.nimbus.host.remote>kfm159082.heracles.sohuno.com</maven.nimbus.host.remote>
+                <maven.zk.host.remote>zk1.adrd.sohuno.com,zk2.adrd.sohuno.com,zk3.adrd.sohuno.com,zk4.adrd.sohuno.com,zk5.adrd.sohuno.com</maven.zk.host.remote>
+                <maven.spout.zk.host>zk1.adrd.sohuno.com:2181,zk2.adrd.sohuno.com:2181,zk3.adrd.sohuno.com:2181,zk4.adrd.sohuno.com:2181,zk5.adrd.sohuno.com:2181</maven.spout.zk.host>
+                <maven.kafka.broker.zk.path>/kafka-0.10.2.1/brokers</maven.kafka.broker.zk.path>
+                <maven.nimbus.seeds>10.10.84.227</maven.nimbus.seeds>
+                <maven.kafka.broker>kf01new.adrd.sohuno.com:8092,kf02new.adrd.sohuno.com:8092,kf03new.adrd.sohuno.com:8092,kf04new.adrd.sohuno.com:8092,kf05new.adrd.sohuno.com:8092,kf06new.adrd.sohuno.com:8092,kf07new.adrd.sohuno.com:8092,kf08new.adrd.sohuno.com:8092,kf09new.adrd.sohuno.com:8092,kf10new.adrd.sohuno.com:8092,kf11new.adrd.sohuno.com:8092,kf12new.adrd.sohuno.com:8092</maven.kafka.broker>
+            </properties>
+        </profile>
+
+    </profiles>
+
+</project>
